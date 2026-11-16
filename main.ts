@@ -1,9 +1,9 @@
-import { copyFile, mkdir } from "node:fs/promises";
-import { dirname, join, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { copyFile, mkdir } from 'node:fs/promises';
+import { dirname, join, resolve } from 'node:path';
 
-const source = join(dirname(fileURLToPath(import.meta.url)), "entry.png");
-const outputDirectory = resolve(process.env.MAKEFUN_OUTPUT_DIR || "/output");
+const source = new URL('./entry.png', import.meta.url);
+const outputDirectory = resolve(process.env.MAKEFUN_OUTPUT_DIR || '/output');
+const destination = join(outputDirectory, 'entry.png');
 
-await mkdir(outputDirectory, { recursive: true });
-await copyFile(source, join(outputDirectory, "entry.png"));
+await mkdir(dirname(destination), { recursive: true });
+await copyFile(source, destination);
